@@ -1,8 +1,10 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: bdmyhotel
+-- Host: localhost    Database: bdMyHotel
 -- ------------------------------------------------------
 -- Server version	8.0.27
+
+CREATE DATABASE `bdMyHotel` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +16,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '';
 
 --
 -- Table structure for table `clientes`
@@ -39,7 +49,6 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'1030683821','Eliana chavez','elianachavez@outlook.com','3212123655');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +72,6 @@ CREATE TABLE `grupos` (
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
-INSERT INTO `grupos` VALUES (1,1);
 /*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +166,7 @@ LOCK TABLES `servicios` WRITE;
 INSERT INTO `servicios` VALUES (1,'Estadia','Estadìa en un dia normal lunes',50000,'ESTADIA_LUNES'),(2,'Estadia','Estadìa en un dia normal martes',50000,'ESTADIA_MARTES'),(3,'Estadia','Estadìa en un dia normal miercoles',50000,'ESTADIA_MIERCOLES'),(4,'Estadia','Estadìa en un dia normal jueves',50000,'ESTADIA_JUEVES'),(5,'Estadia','Estadìa en un dia normal viernes',50000,'ESTADIA_VIERNES'),(6,'Estadia','Estadìa en un dia normal sabado',80000,'ESTADIA_SABADO'),(7,'Estadia','Estadìa en un dia normal domingo',80000,'ESTADIA_DOMINGO'),(8,'Estadia','Estadìa en un dia festivo',80000,'ESTADIA_FESTIVO'),(10,'otro','Plan que incluye todos los servivios del hotel *Sin estadía',90000,'PLAN_TODO_INCLUIDO'),(11,'Bienestar','Ingreso al Spa',10000,'SPA'),(12,'Bienestar','Ingreso al gimnasio',15000,'GYM'),(13,'Restaurante','Cualquier plato del menu del restaurante',30000,'PLATO_RESTAURANTE');
 /*!40000 ALTER TABLE `servicios` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -168,4 +177,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-15  0:36:35
+-- Dump completed on 2022-01-15  4:55:34

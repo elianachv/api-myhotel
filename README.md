@@ -196,7 +196,7 @@ El proyecto se encuentra desplegado en AWS haciendo uso de los servicios:
 - AWS RDS
 - AWS Elastic Bean Stack
 
-La url para acceder y realizar pruebas en vivo con la api es [http://www.apihotel.com/hola/](http://www.apihotel.com/hola/)
+La url para acceder y realizar pruebas en vivo con la api es [http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/](http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/api/servicios)
 
 <a id="pruebas"></a>
 ## Pruebas
