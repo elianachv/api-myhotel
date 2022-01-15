@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/clientes")
@@ -50,12 +52,12 @@ public class ClienteController {
     }
 
     @GetMapping("/checkout/id/{id}")
-    public String checkout(@PathVariable(value = "id") long id) {
+    public Map<String, Object>  checkout(@PathVariable(value = "id") long id) {
         return this.calcularTotal(id);
     }
 
     @GetMapping("/checkout/cc/{cedula}")
-    public String checkout(@PathVariable(value = "cedula") String cedula) {
+    public Map<String, Object>  checkout(@PathVariable(value = "cedula") String cedula) {
         return this.calcularTotal(cedula);
     }
 
@@ -115,7 +117,7 @@ public class ClienteController {
 
     }
 
-    public String calcularTotal(long id) {
+    public Map<String, Object> calcularTotal(long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
         Ingreso ingreso = ingresoRepository.getUltimoIngreso(cliente.getCedula());
         if (ingreso == null) {
@@ -127,12 +129,18 @@ public class ClienteController {
                 Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
                 total += s.getPrecio();
             }
-            return "El cliente identificado con CC " + cliente.getCedula() + " debe pagar " + total;
+
+            Map<String, Object> resultado = new HashMap<>();
+            resultado.put("mensaje", "El cliente identificado con CC " + cliente.getCedula() + " debe pagar " + total);
+            resultado.put("total", total);
+            ingreso.setTotal_consumo(total);
+            ingresoRepository.save(ingreso);
+            return resultado;
         }
 
     }
 
-    public String calcularTotal(String cedula) {
+    public Map<String, Object> calcularTotal(String cedula) {
         Cliente cliente = clienteRepository.getByCedula(cedula);
 
         if (cliente != null) {
@@ -146,7 +154,12 @@ public class ClienteController {
                     Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
                     total += s.getPrecio();
                 }
-                return "El cliente identificado con CC " + cedula + " debe pagar " + total;
+                Map<String, Object> resultado = new HashMap<>();
+                resultado.put("mensaje", "El cliente identificado con CC " + cliente.getCedula() + " debe pagar " + total);
+                resultado.put("total", total);
+                ingreso.setTotal_consumo(total);
+                ingresoRepository.save(ingreso);
+                return resultado;
             }
 
 
