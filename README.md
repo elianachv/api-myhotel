@@ -50,6 +50,7 @@ La base de datos se encuentra diseñada de la siguiente manera
 
 <a id="bd-clientes"></a>  
 **Clientes:** Tabla en la que se almacena la información personal de los clientes  
+
 | Campo | Descripción | Notas |  
 |--|--|--|  
 |id| Identificador único | Llave primaria, autoincremental|  
@@ -67,7 +68,8 @@ La base de datos se encuentra diseñada de la siguiente manera
 |total_integrantes| Cantidad total de personas registradas con el identificador |-|
 
 <a id="bd-servicios"></a>  
-**Servicios:** Tabla en la que se almacena la información sobre los servicios que ofrece el hotel    
+**Servicios:** Tabla en la que se almacena la información sobre los servicios que ofrece el hotel
+
 | Campo | Descripción | Notas |  
 |--|--|--|  
 |id| Identificador único | Llave primaria, autoincremental|  
@@ -77,6 +79,7 @@ La base de datos se encuentra diseñada de la siguiente manera
 
 <a id="bd-ingresos"></a>  
 **Ingresos:** Tabla en la que se almacena la información sobre las personas que se registran en el hotel. Se hizo de manera separada porque un cliente puede ingresar varias veces al hotel.  
+
 | Campo | Descripción | Notas |  
 |--|--|--|  
 |id| Identificador único | Llave primaria, autoincremental|  
@@ -88,6 +91,7 @@ La base de datos se encuentra diseñada de la siguiente manera
 
 <a id="bd-registros"></a>  
 **Registros:** Tabla en la que se almacena la información sobre el consumo de servicios por parte los clientes ingresados.  
+
 | Campo | Descripción | Notas |  
 |--|--|--|  
 |id| Identificador único | Llave primaria, autoincremental|  
@@ -99,12 +103,14 @@ A continuación una imagen del modelo:
 
 ![modelo](https://github.com/elianachv/api-myhotel/blob/main/bd/modeloBd.png?raw=true)
 
-En la carpeta configuraciones puede encontrar el script sql para configurar la base de datos  
+En la carpeta bd puede encontrar el script sql para configurar la base de datos  
+
 <a id="api"></a>
 ### API
 
 <a id="api-servicios"></a>  
 **Servicios**  
+
 | Método | Url  |  Descripción |   
 |--|--|--|  
 |POST| /api/servicios  | Agrega otro servicio a la tabla servicios|  
@@ -119,6 +125,7 @@ PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identi
 
 <a id="api-clientes"></a>  
 **Clientes**  
+
 | Método | Url  |  Descripción |   
 |--|--|--|  
 |POST| /api/clientes| Agrega otro cliente a la tabla clientes|  
@@ -134,6 +141,7 @@ PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identi
 
 <a id="api-grupos"></a>  
 **Grupos**  
+
 | Método | Url  |  Descripción |   
 |--|--|--|  
 |POST| /api/grupos| Agrega otro grupo a la tabla grupos|  
@@ -141,8 +149,10 @@ PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identi
 | GET | /api/grupos/id/{id}| Obtiene el grupo que coincide con el id especificado|  
 | PUT| /api/grupos/id/{id}  | Modifica el grupo identificado con el id especificado con los datos del grupo recibido en el body|  
 | DELETE| /api/grupos/id/{id}  | Elimina el grupo identificado con el id especificado|  
+
 <a id="api-registros"></a>  
 **Registros**  
+
 | Método | Url  |  Descripción |   
 |--|--|--|  
 |POST| /api/registros| Agrega otro registro a la tabla registros|  
@@ -150,8 +160,10 @@ PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identi
 | GET | /api/registros/cliente/{id_cliente}| Obtiene todos los registros de un cliente|  
 | PUT| /api/registros/id/{id}  | Modifica el registro identificado con el id especificado con los datos del registro recibido en el body|  
 | DELETE| /api/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
+
 <a id="api-ingresos"></a>  
 **Ingresos**  
+
 | Método | Url  |  Descripción |   
 |--|--|--|  
 |POST| /api/ingresos| Agrega otro ingreso a la tabla ingresos|  
@@ -235,6 +247,6 @@ Para realizar las pruebas de la API se sugiere seguir el siguiente flujo
 
 <a id="contacto"></a>
 ## Contacto
-Cualquier duda comentario sugernecia es bienvenido. Puedes enviarme un email a elianachavezv@gmail.com
+Cualquier duda comentario o sugerencia es bienvenido. Puede enviarme un email a elianachavezv@gmail.com
 
 [Volver arriba](#top)
