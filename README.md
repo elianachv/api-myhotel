@@ -1,6 +1,20 @@
 
-# Prueba Técnica Banco Popular
-## Construcción de API REST de un hotel
+
+# Construcción de API REST de un hotel
+
+## Descripción
+
+## Tecnologías y aplicaciones utilizadas
+
+* [Java](https://www.jetbrains.com/es-es/idea/) 
+* [Springboot](https://www.jetbrains.com/es-es/idea/) 
+* [MySQL Server](https://www.jetbrains.com/es-es/idea/) 
+* [MySQL Workbench](https://www.jetbrains.com/es-es/idea/) 
+* [Postman](https://www.jetbrains.com/es-es/idea/) 
+* [AWS](https://www.jetbrains.com/es-es/idea/) 
+
+
+## Estructura del proyecto
 
 ### Base de datos
 La base de datos se encuentra diseñada de la siguiente manera
@@ -22,7 +36,7 @@ Tabla en la que se almacena la información sobre los grupos, número para agrup
 | Campo | Descripción | Notas |
 |--|--|--|
 |id| Identificador único | Llave primaria, autoincremental|
-|total_integrantes| Cantidad total de personas registradas con el identificador, se actualiza una vez terminado el registro de los clientes |-|
+|total_integrantes| Cantidad total de personas registradas con el identificador |-|
 
 
 **Servicios:** 
@@ -81,9 +95,11 @@ En la carpeta configuraciones puede encontrar el script sql para configurar la b
 | GET | /api/clientes| Obtienes todos los clientes registrados en el hotel|
 | GET | /api/clientes/id/{id}| Obtiene el cliente que coincide con el id especificado|
 | PUT| /api/cliente/id/{id}  | Modifica el cliente identificado con el id especificado con los datos del cliente recibido en el body|
+| GET | /api/clientes/checkout/id/{id}  | Obtiene un mensaje especificando la cantidad total que debe pagar el cliente identificado con el id especificado hasta el momento|
 | DELETE| /api/clientes/id/{id}  | Elimina el cliente identificado con el id especificado|
 | GET | /api/clientes/cc/{cc}  | Obtiene el cliente que coincida con la cedula especificada|
- PUT| /api/clientes/cc/{cc}  | Modifica el cliente identificado con la cedula especificada con los datos del cliente recibido en el body|
+| GET | /api/clientes/checkout/cc/{cc}  | Obtiene un mensaje especificando la cantidad total que debe pagar el cliente identificado con la cedula especificada hasta el momento|
+ |PUT| /api/clientes/cc/{cc}  | Modifica el cliente identificado con la cedula especificada con los datos del cliente recibido en el body|
  | DELETE| /api/clientes/cc/{cc}  | Elimina el cliente identificado con la cedula especificada|
 
 **Grupos**
@@ -119,4 +135,23 @@ En la carpeta configuraciones puede encontrar el script sql para configurar la b
 **Funciones que se podrían automatizar**
 
 * Cada vez que se actualice la fecha de salida de un cliente se podría desarrollar una función que de manera automática  recopile todos los registros que coinciden con el identificador del usuario y calcule el total de los servicios consumidos y actualice el campo de total consumo. 
+
+## Despliegue
+
+### Local
+
+Para levantar la aplicación 
+
+1. Descargue el proyecto y ábralo con su editor de texto preferido, se recomienda [IntelliJ](https://www.jetbrains.com/es-es/idea/)	
+
+2. Configure la base de datos en [MySQL Workbench](https://www.jetbrains.com/es-es/idea/) utilizando el documento sql que encontrará en la carpeta bd con el nombre *bdMyHotel.ql* 
+
+3. Cambie las credenciales correspondientes en el archivo app.properties
+
+4. Levante el servidor
+
+5. Utilizando un cliente http, se recomienda [Postman](https://www.jetbrains.com/es-es/idea/) realice las pruebas de la API
+
+### En la nube
+El proyecto se encuentra desplegado en AWS 
 

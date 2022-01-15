@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ap/grupos")
+@RequestMapping("api/grupos")
 public class GrupoController {
     @Autowired
     private GrupoRepository grupoRepository;
@@ -19,7 +19,6 @@ public class GrupoController {
     public List<Grupo> obtenerGrupos() {
         return grupoRepository.findAll();
     }
-
 
     @GetMapping("/id/{id}")
     public Grupo obtenerGrupoPorId(@PathVariable(value = "id") long id) {

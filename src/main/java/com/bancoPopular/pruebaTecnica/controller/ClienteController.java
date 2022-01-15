@@ -1,10 +1,9 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
+import com.bancoPopular.pruebaTecnica.entity.*;
 import com.bancoPopular.pruebaTecnica.entity.Cliente;
-import com.bancoPopular.pruebaTecnica.entity.Cliente;
-import com.bancoPopular.pruebaTecnica.entity.Servicio;
 import com.bancoPopular.pruebaTecnica.exception.RecursoNoEncontradoException;
-import com.bancoPopular.pruebaTecnica.repository.ClienteRepository;
+import com.bancoPopular.pruebaTecnica.repository.*;
 import com.bancoPopular.pruebaTecnica.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +18,19 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private RegistroRepository registroRepository;
+
+    @Autowired
+    private ServicioRepository servicioRepository;
+
+    @Autowired
+    private IngresoRepository ingresoRepository;
+
     @GetMapping
     public List<Cliente> obtenerClientes() {
         return clienteRepository.findAll();
     }
-
-
 
     @GetMapping("/cc/{cc}")
     public Cliente obtenerClientePorCedula(@PathVariable(value = "cc") String cedula) {
@@ -41,6 +47,16 @@ public class ClienteController {
     @GetMapping("/id/{id}")
     public Cliente obtenerClientePorId(@PathVariable(value = "id") long id) {
         return clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+    }
+
+    @GetMapping("/checkout/id/{id}")
+    public String checkout(@PathVariable(value = "id") long id) {
+        return this.calcularTotal(id);
+    }
+
+    @GetMapping("/checkout/cc/{cedula}")
+    public String checkout(@PathVariable(value = "cedula") String cedula) {
+        return this.calcularTotal(cedula);
     }
 
     @PostMapping
@@ -84,7 +100,7 @@ public class ClienteController {
 
     }
 
-    @DeleteMapping("/identificador/{identificador}")
+    @DeleteMapping("/cc/{cedula}")
     public ResponseEntity<Cliente> eliminarClientePorIdentificador(@PathVariable(value = "cedula") String cedula) {
 
         Cliente clienteExistente = clienteRepository.getByCedula(cedula);
@@ -97,6 +113,47 @@ public class ClienteController {
         }
 
 
+    }
+
+    public String calcularTotal(long id) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+        Ingreso ingreso = ingresoRepository.getUltimoIngreso(cliente.getCedula());
+        if (ingreso == null) {
+            throw new RecursoNoEncontradoException("El cliente identificado con " + cliente.getCedula() + " no ha ingresado");
+        } else {
+            List<Registro> registros = registroRepository.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
+            long total = 0;
+            for (Registro resgistro : registros) {
+                Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
+                total += s.getPrecio();
+            }
+            return "El cliente identificado con CC " + cliente.getCedula() + " debe pagar " + total;
+        }
+
+    }
+
+    public String calcularTotal(String cedula) {
+        Cliente cliente = clienteRepository.getByCedula(cedula);
+
+        if (cliente != null) {
+            Ingreso ingreso = ingresoRepository.getUltimoIngreso(cedula);
+            if (ingreso == null) {
+                throw new RecursoNoEncontradoException("El cliente identificado con " + cedula + " no ha ingresado");
+            } else {
+                List<Registro> registros = registroRepository.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
+                long total = 0;
+                for (Registro resgistro : registros) {
+                    Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
+                    total += s.getPrecio();
+                }
+                return "El cliente identificado con CC " + cedula + " debe pagar " + total;
+            }
+
+
+        } else {
+            throw new RecursoNoEncontradoException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
+
+        }
     }
 
 }

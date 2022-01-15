@@ -17,6 +17,9 @@ public interface IngresoRepository extends JpaRepository<Ingreso, Long> {
     @Query("select ingreso from Ingreso ingreso where ingreso.id_grupo = ?1")
     List<Ingreso> getAllByGrupo(long grupo);
 
+    @Query(value = "SELECT * FROM ingresos  WHERE cedula = ?1 ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    Ingreso getUltimoIngreso(String cedula);
+
     @Modifying
     @Transactional
     @Query("delete from Ingreso ingreso where ingreso.cedula = ?1")
