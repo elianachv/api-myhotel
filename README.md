@@ -2,6 +2,8 @@
 
 # Construcción de API REST de un hotel
 
+Para revisar la misma aplicación pero desarrollada con Backend Javascript haga clic [aquí](https://elianachv.github.io/api-myhotel-js/)
+
 ## Índice
 1. [Descripción](#descripcion)
 2. [Tecnologías y aplicaciones utilizadas](#tecnologias)
@@ -157,7 +159,9 @@ PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identi
 |--|--|--|  
 |POST| /api/registros| Agrega otro registro a la tabla registros|  
 | GET | /api/registros| Obtienes todos los registros |  
-| GET | /api/registros/cliente/{id_cliente}| Obtiene todos los registros de un cliente|  
+| GET | /api/registros/id/{id}| Obtiene el registro que corresponde al id especificado|
+| GET | /api/registros/cliente/{cc_cliente}| Obtiene todos los registros de un cliente|  
+| GET | /api/registros/servicio/{servicio}| Obtiene todos los registros del identificador del servicio especificado|
 | PUT| /api/registros/id/{id}  | Modifica el registro identificado con el id especificado con los datos del registro recibido en el body|  
 | DELETE| /api/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
 
@@ -184,7 +188,8 @@ Para levantar la aplicación
 
 1. Descargue el proyecto y ábralo con su editor de texto preferido, se recomienda [IntelliJ](https://www.jetbrains.com/es-es/idea/)
 
-2. Configure la base de datos en [MySQL Workbench](https://dev.mysql.com/downloads/mysql/) utilizando el documento sql que encontrará en la carpeta bd con el nombre *bdMyHotel.ql*
+2. Configure la base de datos en [MySQL Workbench](https://dev.mysql.com/downloads/mysql/) utilizando el documento sql que encontrará en la carpeta bd con el nombre *bdMyHotel.sql*
+
 3. Cambie las credenciales correspondientes en el archivo app.properties
 
 4. Levante el servidor
