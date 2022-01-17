@@ -64,7 +64,7 @@ La base de datos se encuentra diseñada de la siguiente manera
 |telefono| Teléfono del cliente  |-|
 
 <a id="bd-grupos"></a>  
-**Grupos:** Tabla en la que se almacena la información sobre los grupos, número para agrupar a personas que se registren juntas. La idea es que si viene un grupo de personas se cree un grupo en la base de datos y posteriormente este sea asignado a todos los clientes que se registren juntos.
+**Grupos:** Tabla en la que se almacena la información sobre los grupos, número para agrupar a personas que se registren juntas. La idea es que si viene un grupo de personas se cree un grupo en la base de datos y posteriormente este sea asignado a todos los clientes que se registren juntos. Si una persona viene sola, debe tener asignado un grupo nuevo. 
 
 | Campo | Descripción | Notas |  
 |--|--|--|  
