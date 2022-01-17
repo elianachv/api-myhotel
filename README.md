@@ -2,7 +2,7 @@
 
 # Construcción de API REST de un hotel
 
-Para revisar la misma aplicación pero desarrollada con Backend Javascript haga clic [aquí](https://elianachv.github.io/api-myhotel-js/)
+**Para revisar la misma aplicación pero desarrollada con Backend Javascript haga clic [aquí](https://elianachv.github.io/api-myhotel-js/)**
 
 ## Índice
 1. [Descripción](#descripcion)
