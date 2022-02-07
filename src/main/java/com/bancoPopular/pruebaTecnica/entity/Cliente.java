@@ -1,12 +1,16 @@
 package com.bancoPopular.pruebaTecnica.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
-import java.util.Date;
-
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -27,6 +31,11 @@ public class Cliente {
     @Column(name = "telefono")
     private String telefono;
 
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL})
+    List<Ingreso> ingresos;
+
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL})
+    List<Registro> registros;
 
     public Cliente(long id, String cedula, String nombre, String correo, String telefono) {
         this.id = id;

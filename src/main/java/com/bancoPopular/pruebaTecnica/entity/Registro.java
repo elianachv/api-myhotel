@@ -26,6 +26,20 @@ public class Registro {
     @Column(name = "servicio")
     private String servicio;
 
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    private Cliente cliente;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_ingreso", referencedColumnName = "id")
+    private Ingreso ingreso;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "servicio", referencedColumnName = "nombre")
+    private Servicio infoServicio;
+
+
+
     public Registro(long id, long id_ingreso, Date fecha, String cedula, String servicio) {
         this.id = id;
         this.id_ingreso = id_ingreso;

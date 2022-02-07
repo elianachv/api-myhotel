@@ -1,11 +1,17 @@
 package com.bancoPopular.pruebaTecnica.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "ingresos")
 public class Ingreso {
@@ -27,6 +33,18 @@ public class Ingreso {
 
     @Column(name = "total_consumo")
     private long total_consumo;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    private Cliente cliente;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_grupo", referencedColumnName = "id")
+    private Grupo grupo;
+
+    @OneToMany(mappedBy = "ingreso", cascade = {CascadeType.ALL})
+    List<Registro> registros;
+
 
     public Ingreso(long id, long id_grupo, String cedula, Date fecha_ingreso, Date fecha_salida, long total_consumo) {
         this.id = id;
