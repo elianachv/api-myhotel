@@ -1,7 +1,7 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.Registro;
-import com.bancoPopular.pruebaTecnica.exception.RecursoNoEncontradoException;
+import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
 import com.bancoPopular.pruebaTecnica.repository.RegistroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class RegistroController {
 
     @GetMapping("/id/{id}")
     public Registro obtenerRegistroPorId(@PathVariable(value = "id") long id) {
-        return registroRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Registro con id " + id + " no está registrado en la base de datos"));
+        return registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
     }
 
     @PostMapping
@@ -43,10 +43,10 @@ public class RegistroController {
 
     @PutMapping("/id/{id}")
     public Registro modificarRegistroPorId(@PathVariable(value = "id") long id, @RequestBody Registro registroEditado) {
-        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Registro con id " + id + " no está registrado en la base de datos"));
-        registroExistente.setCedula(registroEditado.getCedula());
+        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
+        //registroExistente.setCedula(registroEditado.getCedula());
         registroExistente.setFecha(registroEditado.getFecha());
-        registroExistente.setServicio(registroEditado.getServicio());
+        //registroExistente.setServicio(registroEditado.getServicio());
         registroRepository.save(registroExistente);
         return registroExistente;
     }
@@ -54,7 +54,7 @@ public class RegistroController {
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Registro> eliminarRegistroPorId(@PathVariable(value = "id") long id) {
-        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Registro con id " + id + " no está registrado en la base de datos"));
+        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
         registroRepository.delete(registroExistente);
         return ResponseEntity.ok().build();
 

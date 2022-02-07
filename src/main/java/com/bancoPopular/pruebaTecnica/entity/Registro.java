@@ -14,17 +14,17 @@ public class Registro {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "id_ingreso")
-    private long id_ingreso;
+   /* @Column(name = "id_ingreso")
+    private long id_ingreso;*/
 
     @Column(name = "fecha")
     private Date fecha;
 
-    @Column(name = "cedula")
-    private String cedula;
+    /*@Column(name = "cedula")
+    private String cedula;*/
 
-    @Column(name = "servicio")
-    private String servicio;
+    /*@Column(name = "servicio")
+    private String servicio;*/
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
@@ -35,17 +35,17 @@ public class Registro {
     private Ingreso ingreso;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "servicio", referencedColumnName = "nombre")
+    @JoinColumn(name = "servicio", referencedColumnName = "identificador")
     private Servicio infoServicio;
 
 
 
     public Registro(long id, long id_ingreso, Date fecha, String cedula, String servicio) {
         this.id = id;
-        this.id_ingreso = id_ingreso;
+        //this.id_ingreso = id_ingreso;
         this.fecha = fecha;
-        this.cedula = cedula;
-        this.servicio = servicio;
+        //this.cedula = cedula;
+        //this.servicio = servicio;
     }
 
     public Registro() {

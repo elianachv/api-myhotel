@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface IngresoRepository extends JpaRepository<Ingreso, Long> {
 
-    @Query("select ingreso from Ingreso ingreso where ingreso.cedula = ?1")
+    @Query("select ingreso from Ingreso ingreso where ingreso.cliente.cedula = ?1")
     List<Ingreso> getAllByCedula(String cedula);
 
-    @Query("select ingreso from Ingreso ingreso where ingreso.id_grupo = ?1")
+    @Query("select ingreso from Ingreso ingreso where ingreso.grupo.id = ?1")
     List<Ingreso> getAllByGrupo(long grupo);
 
     @Query(value = "SELECT * FROM ingresos  WHERE cedula = ?1 ORDER BY id DESC LIMIT 1", nativeQuery = true)
@@ -22,6 +22,6 @@ public interface IngresoRepository extends JpaRepository<Ingreso, Long> {
 
     @Modifying
     @Transactional
-    @Query("delete from Ingreso ingreso where ingreso.cedula = ?1")
+    @Query("delete from Ingreso ingreso where ingreso.cliente.cedula = ?1")
     void deleteByCedula(String cedula);
 }

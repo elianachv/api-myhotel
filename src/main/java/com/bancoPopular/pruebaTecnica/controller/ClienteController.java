@@ -2,9 +2,10 @@ package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.*;
 import com.bancoPopular.pruebaTecnica.entity.Cliente;
-import com.bancoPopular.pruebaTecnica.exception.RecursoNoEncontradoException;
+import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
 import com.bancoPopular.pruebaTecnica.repository.*;
 import com.bancoPopular.pruebaTecnica.repository.ClienteRepository;
+import com.bancoPopular.pruebaTecnica.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
-@RequestMapping("api/clientes")
+@RequestMapping("api/v2/clientes")
 public class ClienteController {
+
+    @Autowired
+    ClienteService clienteService;
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -30,34 +37,42 @@ public class ClienteController {
     private IngresoRepository ingresoRepository;
 
     @GetMapping
-    public List<Cliente> obtenerClientes() {
-        return clienteRepository.findAll();
+    public ResponseEntity<?> listarClientes() {
+        List<Cliente> clienteList = StreamSupport.stream(clienteService.findAll().spliterator(), false).collect(Collectors.toList());
+        return ResponseEntity.ok().body(clienteList);
+        //return ResponseEntity.status(HttpStatus.ACCEPTED).body(clienteService.findAll());
     }
 
     @GetMapping("/cc/{cc}")
-    public Cliente obtenerClientePorCedula(@PathVariable(value = "cc") String cedula) {
+    public ResponseEntity<?> obtenerClientePorCedula(@PathVariable(value = "cc") String cedula) {
 
-        Cliente cliente = clienteRepository.getByCedula(cedula);
+        Optional<Cliente> cliente = clienteService.findByCedula(cedula);
 
-        if (cliente != null) {
-            return cliente;
-        } else {
-            throw new RecursoNoEncontradoException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
+        if (cliente.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok().body(cliente.get());
     }
 
     @GetMapping("/id/{id}")
-    public Cliente obtenerClientePorId(@PathVariable(value = "id") long id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+    public ResponseEntity<?> obtenerClientePorId(@PathVariable(value = "id") long id) {
+        Optional<Cliente> cliente = clienteService.findById(id);
+
+        if (cliente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(cliente.get());
     }
 
     @GetMapping("/checkout/id/{id}")
-    public Map<String, Object>  checkout(@PathVariable(value = "id") long id) {
+    public Map<String, Object> checkout(@PathVariable(value = "id") long id) {
         return this.calcularTotal(id);
     }
 
     @GetMapping("/checkout/cc/{cedula}")
-    public Map<String, Object>  checkout(@PathVariable(value = "cedula") String cedula) {
+    public Map<String, Object> checkout(@PathVariable(value = "cedula") String cedula) {
         return this.calcularTotal(cedula);
     }
 
@@ -68,7 +83,7 @@ public class ClienteController {
 
     @PutMapping("/id/{id}")
     public Cliente modificarClientePorId(@PathVariable(value = "id") long id, @RequestBody Cliente clienteEditado) {
-        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente con id " + id + " no está registrado en la base de datos"));
         clienteExistente.setNombre(clienteEditado.getNombre());
         clienteExistente.setCedula(clienteEditado.getCedula());
         clienteExistente.setCorreo(clienteEditado.getCorreo());
@@ -79,7 +94,7 @@ public class ClienteController {
 
     @PutMapping("/cc/{cedula}")
     public Cliente modificarClientePorCedula(@PathVariable(value = "cedula") String cedula, @RequestBody Cliente clienteEditado) {
-        Cliente clienteExistente = clienteRepository.getByCedula(cedula);
+        Cliente clienteExistente = clienteService.findByCedula(cedula).get();
 
         if (clienteExistente != null) {
             clienteExistente.setNombre(clienteEditado.getNombre());
@@ -89,14 +104,14 @@ public class ClienteController {
             clienteRepository.save(clienteExistente);
             return clienteExistente;
         } else {
-            throw new RecursoNoEncontradoException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
+            throw new NotFoundException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
         }
 
     }
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Cliente> eliminarClientePorId(@PathVariable(value = "id") long id) {
-        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente con id " + id + " no está registrado en la base de datos"));
         clienteRepository.delete(clienteExistente);
         return ResponseEntity.ok().build();
 
@@ -105,28 +120,28 @@ public class ClienteController {
     @DeleteMapping("/cc/{cedula}")
     public ResponseEntity<Cliente> eliminarClientePorIdentificador(@PathVariable(value = "cedula") String cedula) {
 
-        Cliente clienteExistente = clienteRepository.getByCedula(cedula);
+        Cliente clienteExistente = clienteService.findByCedula(cedula).get();
 
         if (clienteExistente != null) {
             clienteRepository.delete(clienteExistente);
             return ResponseEntity.ok().build();
         } else {
-            throw new RecursoNoEncontradoException("Cliente con identificador " + cedula + " no está registrado en la base de datos");
+            throw new NotFoundException("Cliente con identificador " + cedula + " no está registrado en la base de datos");
         }
 
 
     }
 
     public Map<String, Object> calcularTotal(long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cliente con id " + id + " no está registrado en la base de datos"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente con id " + id + " no está registrado en la base de datos"));
         Ingreso ingreso = ingresoRepository.getUltimoIngreso(cliente.getCedula());
         if (ingreso == null) {
-            throw new RecursoNoEncontradoException("El cliente identificado con " + cliente.getCedula() + " no ha ingresado");
+            throw new NotFoundException("El cliente identificado con " + cliente.getCedula() + " no ha ingresado");
         } else {
             List<Registro> registros = registroRepository.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
             long total = 0;
             for (Registro resgistro : registros) {
-                Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
+                Servicio s = servicioRepository.findByIdentificador(resgistro.getInfoServicio().getIdentificador()).get();
                 total += s.getPrecio();
             }
 
@@ -141,17 +156,17 @@ public class ClienteController {
     }
 
     public Map<String, Object> calcularTotal(String cedula) {
-        Cliente cliente = clienteRepository.getByCedula(cedula);
+        Cliente cliente = clienteRepository.findByCedula(cedula).get();
 
         if (cliente != null) {
             Ingreso ingreso = ingresoRepository.getUltimoIngreso(cedula);
             if (ingreso == null) {
-                throw new RecursoNoEncontradoException("El cliente identificado con " + cedula + " no ha ingresado");
+                throw new NotFoundException("El cliente identificado con " + cedula + " no ha ingresado");
             } else {
                 List<Registro> registros = registroRepository.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
                 long total = 0;
                 for (Registro resgistro : registros) {
-                    Servicio s = servicioRepository.getByIdentificador(resgistro.getServicio());
+                    Servicio s = servicioRepository.findByIdentificador(resgistro.getInfoServicio().getIdentificador()).get();
                     total += s.getPrecio();
                 }
                 Map<String, Object> resultado = new HashMap<>();
@@ -164,7 +179,7 @@ public class ClienteController {
 
 
         } else {
-            throw new RecursoNoEncontradoException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
+            throw new NotFoundException("Cliente con cedula " + cedula + " no está registrado en la base de datos");
 
         }
     }

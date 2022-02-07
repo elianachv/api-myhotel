@@ -19,11 +19,11 @@ public class Ingreso {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "id_grupo")
-    private long id_grupo;
+    /*@Column(name = "id_grupo")
+    private long id_grupo;*/
 
-    @Column(name = "cedula")
-    private String cedula;
+    /*@Column(name = "cedula")
+    private String cedula;*/
 
     @Column(name = "fecha_ingreso")
     private Date fecha_ingreso;
@@ -48,8 +48,8 @@ public class Ingreso {
 
     public Ingreso(long id, long id_grupo, String cedula, Date fecha_ingreso, Date fecha_salida, long total_consumo) {
         this.id = id;
-        this.id_grupo = id_grupo;
-        this.cedula = cedula;
+        //this.id_grupo = id_grupo;
+        //this.cedula = cedula;
         this.fecha_ingreso = fecha_ingreso;
         this.fecha_salida = fecha_salida;
         this.total_consumo = total_consumo;

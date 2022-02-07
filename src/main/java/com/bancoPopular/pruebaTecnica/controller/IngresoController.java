@@ -1,7 +1,7 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.Ingreso;
-import com.bancoPopular.pruebaTecnica.exception.RecursoNoEncontradoException;
+import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
 import com.bancoPopular.pruebaTecnica.repository.IngresoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class IngresoController {
 
     @GetMapping("/id/{id}")
     public Ingreso obtenerIngresoPorId(@PathVariable(value = "id") long id) {
-        return ingresoRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Ingreso con id " + id + " no está registrado en la base de datos"));
+        return ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
     }
 
     @PostMapping
@@ -43,11 +43,11 @@ public class IngresoController {
 
     @PutMapping("/id/{id}")
     public Ingreso modificarIngresoPorId(@PathVariable(value = "id") long id, @RequestBody Ingreso ingresoEditado) {
-        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Ingreso con id " + id + " no está registrado en la base de datos"));
+        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
         ingresoExistente.setFecha_ingreso(ingresoEditado.getFecha_ingreso());
         ingresoExistente.setFecha_salida(ingresoEditado.getFecha_salida());
-        ingresoExistente.setCedula(ingresoEditado.getCedula());
-        ingresoExistente.setId_grupo(ingresoEditado.getId_grupo());
+        //ingresoExistente.setCedula(ingresoEditado.getCedula());
+        //ingresoExistente.setId_grupo(ingresoEditado.getId_grupo());
         ingresoExistente.setTotal_consumo(ingresoEditado.getTotal_consumo());
         ingresoRepository.save(ingresoExistente);
         return ingresoExistente;
@@ -55,7 +55,7 @@ public class IngresoController {
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Ingreso> eliminarIngresoPorId(@PathVariable(value = "id") long id) {
-        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Ingreso con id " + id + " no está registrado en la base de datos"));
+        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
         ingresoRepository.delete(ingresoExistente);
         return ResponseEntity.ok().build();
 
