@@ -159,7 +159,7 @@ PUT| /api/v2/servicios/identificador/{identificador}  | Modifica el servicio ide
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/v2/registros| Agrega otro registro a la tabla registros|  
+|POST| /api/v2/registros?cedula={cedulaCliente}&servicio={identificadorServicio}| Agrega otro registro a la tabla registros|  
 | GET | /api/v2/registros| Obtienes todos los registros |  
 | GET | /api/v2/registros/id/{id}| Obtiene el registro que corresponde al id especificado|
 | GET | /api/v2/registros/cliente/{cc_cliente}| Obtiene todos los registros de un cliente|  

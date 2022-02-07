@@ -3,12 +3,14 @@ package com.bancoPopular.pruebaTecnica.entity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "registros")
 public class Registro {
@@ -45,6 +47,10 @@ public class Registro {
     private Servicio servicio;
 
 
+    public Registro(Date fecha, long id_ingreso) {
+        this.fecha = fecha;
+        this.id_ingreso = id_ingreso;
+    }
 
     public Registro(long id, long id_ingreso, Date fecha, String cedula, String servicio) {
         this.id = id;

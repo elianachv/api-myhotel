@@ -11,11 +11,11 @@ import java.util.List;
 public interface RegistroRepository extends JpaRepository<Registro, Long> {
 
     @Query("select registro from Registro registro where registro.cliente.cedula = ?1")
-    List<Registro> getAllByCedula(String cedula);
+    List<Registro> findtAllByCedula(String cedula);
 
     @Query("select registro from Registro registro where registro.cliente.cedula = ?1 and registro.id_ingreso = ?2")
-    List<Registro> getAllByCedulaIdIngreso(String cedula, long id_ingreso);
+    List<Registro> findAllByCedulaIdIngreso(String cedula, long id_ingreso);
 
     @Query("select registro from Registro registro where registro.servicio.identificador = ?1")
-    List<Registro> getAllByServicio(String servicio);
+    List<Registro> findAllByServicio(String servicio);
 }

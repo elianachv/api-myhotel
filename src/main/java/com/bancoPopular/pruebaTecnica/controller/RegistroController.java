@@ -1,63 +1,68 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.Registro;
+import com.bancoPopular.pruebaTecnica.exception.InvalidDataException;
 import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
 import com.bancoPopular.pruebaTecnica.repository.RegistroRepository;
+import com.bancoPopular.pruebaTecnica.service.RegistrosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/registros")
+@RequestMapping("api/v2/registros")
 public class RegistroController {
+
     @Autowired
-    private RegistroRepository registroRepository;
+    private RegistrosService registrosService;
 
     @GetMapping
-    public List<Registro> obtenerRegistros() {
-        return registroRepository.findAll();
+    public ResponseEntity<?> obtenerRegistros() {
+        return ResponseEntity.ok().body(registrosService.findAll());
     }
 
     @GetMapping("/cliente/{cc_cliente}")
-    public List<Registro> obtenerRegistrosPorCliente(@PathVariable(value = "cc_cliente") String cedula) {
-        return registroRepository.getAllByCedula(cedula);
+    public ResponseEntity<?> obtenerRegistrosPorCliente(@PathVariable(value = "cc_cliente") String cedula) {
+        return ResponseEntity.ok().body(registrosService.findAllByCedula(cedula));
     }
 
     @GetMapping("/servicio/{id_servicio}")
-    public List<Registro> obtenerRegistrosPorServicio(@PathVariable(value = "id_servicio") String servicio) {
-        return registroRepository.getAllByServicio(servicio);
+    public ResponseEntity<?> obtenerRegistrosPorServicio(@PathVariable(value = "id_servicio") String servicio) {
+        return ResponseEntity.ok().body(registrosService.findAllByServicio(servicio));
     }
 
 
     @GetMapping("/id/{id}")
-    public Registro obtenerRegistroPorId(@PathVariable(value = "id") long id) {
-        return registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
+    public ResponseEntity<?> obtenerRegistroPorId(@PathVariable(value = "id") long id) {
+        return ResponseEntity.ok().body(registrosService.findById(id));
     }
 
+
     @PostMapping
-    public Registro crearRegistro(@RequestBody Registro registro) {
-        return registroRepository.save(registro);
+    public ResponseEntity<?> crearRegistro( @RequestParam String cedula, @RequestParam String servicio) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrosService.save(cedula,servicio));
     }
 
     @PutMapping("/id/{id}")
-    public Registro modificarRegistroPorId(@PathVariable(value = "id") long id, @RequestBody Registro registroEditado) {
-        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
-        //registroExistente.setCedula(registroEditado.getCedula());
-        registroExistente.setFecha(registroEditado.getFecha());
-        //registroExistente.setServicio(registroEditado.getServicio());
-        registroRepository.save(registroExistente);
-        return registroExistente;
+    public ResponseEntity<?> modificarRegistroPorId(@PathVariable(value = "id") long id, @Valid @RequestBody Registro registroEditado, BindingResult result) {
+
+        if(result.hasErrors()){
+            throw new InvalidDataException(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrosService.update(id,registroEditado));
+
     }
 
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Registro> eliminarRegistroPorId(@PathVariable(value = "id") long id) {
-        Registro registroExistente = registroRepository.findById(id).orElseThrow(() -> new NotFoundException("Registro con id " + id + " no está registrado en la base de datos"));
-        registroRepository.delete(registroExistente);
-        return ResponseEntity.ok().build();
-
+    public ResponseEntity<?> eliminarRegistroPorId(@PathVariable(value = "id") long id) {
+        return ResponseEntity.ok().body(registrosService.delete(id));
     }
 
 

@@ -1,7 +1,9 @@
 package com.bancoPopular.pruebaTecnica.exception;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,8 +56,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(MismatchedInputException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        // Aplica cuando en el URL se envia un argumento invalido, por ejemplo String
+        // por Integer
+        return buildResponseEntity(httpStatus, new RuntimeException("Tipo de Argumento invalido"));
+    }
+
+
+
+    @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleException(Exception exc) {
-        exc.printStackTrace();
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         return buildResponseEntity(httpStatus, new RuntimeException("Se presento un problema, reporte e intente luego."));
     }
@@ -65,7 +76,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<ErrorResponse> buildResponseEntity(HttpStatus httpStatus, Exception exc, List<String> errors) {
-        exc.printStackTrace();
         ErrorResponse error = new ErrorResponse();
         error.setMensaje(exc.getMessage());
         error.setEstado(httpStatus.value());

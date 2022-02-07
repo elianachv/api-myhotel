@@ -165,7 +165,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 
         //List<Registro> registros = cliente.getRegistros(ingreso.getId());
-        List<Registro> registros = registroDao.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
+        List<Registro> registros = registroDao.findAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
 
         long total = 0;
         for (Registro registro : registros) {

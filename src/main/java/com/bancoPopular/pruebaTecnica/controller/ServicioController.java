@@ -20,9 +20,6 @@ import java.util.stream.StreamSupport;
 public class ServicioController {
 
     @Autowired
-    private ServicioRepository servicioRepository;
-
-    @Autowired
     private ServicioService servicioService;
 
     @GetMapping
