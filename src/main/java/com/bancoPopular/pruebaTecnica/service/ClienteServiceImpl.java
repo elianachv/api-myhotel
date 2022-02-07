@@ -166,19 +166,36 @@ public class ClienteServiceImpl implements ClienteService {
 
         //List<Registro> registros = cliente.getRegistros(ingreso.getId());
         List<Registro> registros = registroDao.getAllByCedulaIdIngreso(cliente.getCedula(), ingreso.getId());
+
         long total = 0;
-        for (Registro resgistro : registros) {
-            total += resgistro.getInfoServicio().getPrecio();
+        for (Registro registro : registros) {
+            total += registro.getServicio().getPrecio();
         }
 
         Map<String, Object> resultado = new HashMap<>();
-        resultado.put("mensaje", "El cliente identificado con CC " + cliente.getCedula() + " debe pagar " + total);
+        resultado.put("mensaje", "El cliente identificado con CC " + cliente.getCedula() + " que ingresó el " + ingreso.getFecha_ingreso() + " debe pagar " + total);
         resultado.put("total", total);
+        resultado.put("fecha_ingreso", ingreso.getFecha_ingreso());
+        resultado.put("gastos", obtenerGastos(registros));
         ingreso.setTotal_consumo(total);
         ingresoDao.save(ingreso);
         return resultado;
 
     }
 
+    public List<?> obtenerGastos(List<Registro> registros) {
+
+        List<Map<String, Object>> gastos = new ArrayList<>();
+
+        for (Registro registro : registros) {
+            Map<String, Object> gasto = new HashMap<>();
+            gasto.put("fecha", registro.getFecha());
+            gasto.put("servicio", registro.getServicio().getIdentificador());
+            gasto.put("precio", registro.getServicio().getPrecio());
+            gastos.add(gasto);
+        }
+
+        return gastos;
+    }
 
 }

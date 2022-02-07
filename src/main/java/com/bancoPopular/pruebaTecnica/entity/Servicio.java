@@ -9,13 +9,14 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @ToString
 @Entity
 @Table(name = "servicios")
-public class Servicio {
+public class Servicio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

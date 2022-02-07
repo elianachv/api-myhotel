@@ -23,6 +23,9 @@ public class Registro {
     @Column(name = "fecha")
     private Date fecha;
 
+    @Column(name = "id_ingreso")
+    private long id_ingreso;
+
     /*@Column(name = "cedula")
     private String cedula;*/
 
@@ -33,13 +36,13 @@ public class Registro {
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     private Cliente cliente;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    /*@ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_ingreso", referencedColumnName = "id")
-    private Ingreso ingreso;
+    private Ingreso ingreso;*/
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "servicio", referencedColumnName = "identificador")
-    private Servicio infoServicio;
+    private Servicio servicio;
 
 
 

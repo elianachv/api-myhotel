@@ -1,50 +1,53 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.Grupo;
-import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
-import com.bancoPopular.pruebaTecnica.repository.GrupoRepository;
+import com.bancoPopular.pruebaTecnica.exception.InvalidDataException;
+import com.bancoPopular.pruebaTecnica.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/grupos")
+@RequestMapping("api/v2/grupos")
 public class GrupoController {
+
     @Autowired
-    private GrupoRepository grupoRepository;
+    private GrupoService grupoService;
 
     @GetMapping
-    public List<Grupo> obtenerGrupos() {
-        return grupoRepository.findAll();
+    public ResponseEntity<?> obtenerGrupos() {
+        return ResponseEntity.ok().body(grupoService.findAll());
     }
 
     @GetMapping("/id/{id}")
-    public Grupo obtenerGrupoPorId(@PathVariable(value = "id") long id) {
-        return grupoRepository.findById(id).orElseThrow(() -> new NotFoundException("Grupo con id " + id + " no está registrado en la base de datos"));
+    public ResponseEntity<?> obtenerGrupoPorId(@PathVariable(value = "id") long id) {
+        return ResponseEntity.ok().body(grupoService.findById(id));
     }
 
     @PostMapping
-    public Grupo crearGrupo(@RequestBody Grupo grupo) {
-        return grupoRepository.save(grupo);
+    public ResponseEntity<?> crearGrupo(@Valid @RequestBody Grupo grupo, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InvalidDataException(result);
+        }
+        return ResponseEntity.ok().body(grupoService.save(grupo));
     }
 
     @PutMapping("/id/{id}")
-    public Grupo modificarGrupoPorId(@PathVariable(value = "id") long id, @RequestBody Grupo grupoEditado) {
-        Grupo grupoExistente = grupoRepository.findById(id).orElseThrow(() -> new NotFoundException("Grupo con id " + id + " no está registrado en la base de datos"));
-        grupoExistente.setTotal_integrantes(grupoEditado.getTotal_integrantes());
-        grupoRepository.save(grupoExistente);
-        return grupoExistente;
+    public ResponseEntity<?> modificarGrupoPorId(@PathVariable(value = "id") long id, @Valid @RequestBody Grupo grupoEditado, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InvalidDataException(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(grupoService.update(id, grupoEditado));
     }
 
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Grupo> eliminarGrupoPorId(@PathVariable(value = "id") long id) {
-        Grupo grupoExistente = grupoRepository.findById(id).orElseThrow(() -> new NotFoundException("Grupo con id " + id + " no está registrado en la base de datos"));
-        grupoRepository.delete(grupoExistente);
-        return ResponseEntity.ok().build();
-
+    public ResponseEntity<?> eliminarGrupoPorId(@PathVariable(value = "id") long id) {
+        return ResponseEntity.ok().body(grupoService.delete(id));
     }
 
 

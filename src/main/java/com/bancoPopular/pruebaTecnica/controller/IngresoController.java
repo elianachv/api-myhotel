@@ -43,7 +43,7 @@ public class IngresoController {
 
     @PutMapping("/id/{id}")
     public Ingreso modificarIngresoPorId(@PathVariable(value = "id") long id, @RequestBody Ingreso ingresoEditado) {
-        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
+        Ingreso ingresoExistente = ingresoRepository.findById(id).get();
         ingresoExistente.setFecha_ingreso(ingresoEditado.getFecha_ingreso());
         ingresoExistente.setFecha_salida(ingresoEditado.getFecha_salida());
         //ingresoExistente.setCedula(ingresoEditado.getCedula());

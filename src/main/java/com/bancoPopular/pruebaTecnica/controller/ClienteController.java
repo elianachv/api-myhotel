@@ -1,11 +1,7 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
-import com.bancoPopular.pruebaTecnica.entity.*;
 import com.bancoPopular.pruebaTecnica.entity.Cliente;
 import com.bancoPopular.pruebaTecnica.exception.InvalidDataException;
-import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
-import com.bancoPopular.pruebaTecnica.repository.*;
-import com.bancoPopular.pruebaTecnica.repository.ClienteRepository;
 import com.bancoPopular.pruebaTecnica.service.ClienteService;
 import com.bancoPopular.pruebaTecnica.service.IngresoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("api/v2/clientes")

@@ -13,9 +13,9 @@ public interface RegistroRepository extends JpaRepository<Registro, Long> {
     @Query("select registro from Registro registro where registro.cliente.cedula = ?1")
     List<Registro> getAllByCedula(String cedula);
 
-    @Query("select registro from Registro registro where registro.cliente.cedula = ?1 and registro.ingreso.id = ?2")
+    @Query("select registro from Registro registro where registro.cliente.cedula = ?1 and registro.id_ingreso = ?2")
     List<Registro> getAllByCedulaIdIngreso(String cedula, long id_ingreso);
 
-    @Query("select registro from Registro registro where registro.infoServicio.identificador = ?1")
+    @Query("select registro from Registro registro where registro.servicio.identificador = ?1")
     List<Registro> getAllByServicio(String servicio);
 }
