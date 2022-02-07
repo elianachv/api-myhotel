@@ -132,54 +132,54 @@ PUT| /api/v2/servicios/identificador/{identificador}  | Modifica el servicio ide
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/clientes| Agrega otro cliente a la tabla clientes|  
-| GET | /api/clientes| Obtienes todos los clientes registrados en el hotel|  
-| GET | /api/clientes/id/{id}| Obtiene el cliente que coincide con el id especificado|  
-| PUT| /api/cliente/id/{id}  | Modifica el cliente identificado con el id especificado con los datos del cliente recibido en el body|  
-| GET | /api/clientes/checkout/id/{id}  | Obtiene un objeto con la cantidad total que debe pagar el cliente identificado con el id especificado hasta el momento, un mensaje y actualiza de manera automatica el campo total_consumo en el registro de la tabla de ingreso correspondiente|  
-| DELETE| /api/clientes/id/{id}  | Elimina el cliente identificado con el id especificado|  
-| GET | /api/clientes/cc/{cc}  | Obtiene el cliente que coincida con la cedula especificada|  
-| GET | /api/clientes/checkout/cc/{cc}  | Obtiene un objeto con la cantidad total que debe pagar el cliente identificado con la cedula especificada hasta el momento, un mensaje y actualiza de manera automatica el campo total_consumo en el registro de la tabla de ingreso correspondiente|  
-|PUT| /api/clientes/cc/{cc}  | Modifica el cliente identificado con la cedula especificada con los datos del cliente recibido en el body|  
-| DELETE| /api/clientes/cc/{cc}  | Elimina el cliente identificado con la cedula especificada|
+|POST| /api/v2/clientes| Agrega otro cliente a la tabla clientes|  
+| GET | /api/v2/clientes| Obtienes todos los clientes registrados en el hotel|  
+| GET | /api/v2/clientes/id/{id}| Obtiene el cliente que coincide con el id especificado|  
+| PUT| /api/v2/cliente/id/{id}  | Modifica el cliente identificado con el id especificado con los datos del cliente recibido en el body|  
+| GET | /api/v2/clientes/checkout/id/{id}  | Obtiene un objeto con la cantidad total que debe pagar el cliente identificado con el id especificado hasta el momento, un mensaje y actualiza de manera automatica el campo total_consumo en el registro de la tabla de ingreso correspondiente|  
+| DELETE| /api/v2/clientes/id/{id}  | Elimina el cliente identificado con el id especificado|  
+| GET | /api/v2/clientes/cc/{cc}  | Obtiene el cliente que coincida con la cedula especificada|  
+| GET | /api/v2/clientes/checkout/cc/{cc}  | Obtiene un objeto con la cantidad total que debe pagar el cliente identificado con la cedula especificada hasta el momento, un mensaje y actualiza de manera automatica el campo total_consumo en el registro de la tabla de ingreso correspondiente|  
+|PUT| /api/v2/clientes/cc/{cc}  | Modifica el cliente identificado con la cedula especificada con los datos del cliente recibido en el body|  
+| DELETE| /api/v2/clientes/cc/{cc}  | Elimina el cliente identificado con la cedula especificada|
 
 <a id="api-grupos"></a>  
 **Grupos**  
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/grupos| Agrega otro grupo a la tabla grupos|  
-| GET | /api/grupos| Obtienes todos los grupos registrados en el hotel|  
-| GET | /api/grupos/id/{id}| Obtiene el grupo que coincide con el id especificado|  
-| PUT| /api/grupos/id/{id}  | Modifica el grupo identificado con el id especificado con los datos del grupo recibido en el body|  
-| DELETE| /api/grupos/id/{id}  | Elimina el grupo identificado con el id especificado|  
+|POST| /api/v2/grupos| Agrega otro grupo a la tabla grupos|  
+| GET | /api/v2/grupos| Obtienes todos los grupos registrados en el hotel|  
+| GET | /api/v2/grupos/id/{id}| Obtiene el grupo que coincide con el id especificado|  
+| PUT| /api/v2/grupos/id/{id}  | Modifica el grupo identificado con el id especificado con los datos del grupo recibido en el body|  
+| DELETE| /api/v2/grupos/id/{id}  | Elimina el grupo identificado con el id especificado|  
 
 <a id="api-registros"></a>  
 **Registros**  
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/registros| Agrega otro registro a la tabla registros|  
-| GET | /api/registros| Obtienes todos los registros |  
-| GET | /api/registros/id/{id}| Obtiene el registro que corresponde al id especificado|
-| GET | /api/registros/cliente/{cc_cliente}| Obtiene todos los registros de un cliente|  
-| GET | /api/registros/servicio/{servicio}| Obtiene todos los registros del identificador del servicio especificado|
-| PUT| /api/registros/id/{id}  | Modifica el registro identificado con el id especificado con los datos del registro recibido en el body|  
-| DELETE| /api/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
+|POST| /api/v2/registros| Agrega otro registro a la tabla registros|  
+| GET | /api/v2/registros| Obtienes todos los registros |  
+| GET | /api/v2/registros/id/{id}| Obtiene el registro que corresponde al id especificado|
+| GET | /api/v2/registros/cliente/{cc_cliente}| Obtiene todos los registros de un cliente|  
+| GET | /api/v2/registros/servicio/{servicio}| Obtiene todos los registros del identificador del servicio especificado|
+| PUT| /api/v2/registros/id/{id}  | Modifica el registro identificado con el id especificado con los datos del registro recibido en el body|  
+| DELETE| /api/v2/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
 
 <a id="api-ingresos"></a>  
 **Ingresos**  
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/ingresos| Agrega otro ingreso a la tabla ingresos|  
-| GET | /api/ingresos| Obtienes todos los ingresos|  
-| GET | /api/ingresos/grupo/{grupo}| Obtiene todos los ingresos de un grupo, todas las personas que se registraron juntas|  
-| GET| /api/ingresos/cc/{cc}  | Obtiene todos los ingresos de cliente|  
-| GET| /api/ingresos/id/{id}  | Obtiene el registro identificado con el id especificado|  
-| PUT| /api/ingresos/id/{id}  | Modifica el ingreso identificado con el id especificado con los datos del ingreso recibido en el body|  
-| DELETE| /api/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
-| DELETE| /api/registros/cc/{cc}  | Elimina todos los ingresos de un cliente identificado con la cedula especificada|
+|POST| /api/v2/ingresos| Agrega otro ingreso a la tabla ingresos|  
+| GET | /api/v2/ingresos| Obtienes todos los ingresos|  
+| GET | /api/v2/ingresos/grupo/{grupo}| Obtiene todos los ingresos de un grupo, todas las personas que se registraron juntas|  
+| GET| /api/v2/ingresos/cc/{cc}  | Obtiene todos los ingresos de cliente|  
+| GET| /api/v2/ingresos/id/{id}  | Obtiene el registro identificado con el id especificado|  
+| PUT| /api/v2/ingresos/id/{id}  | Modifica el ingreso identificado con el id especificado con los datos del ingreso recibido en el body|  
+| DELETE| /api/v2/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
+| DELETE| /api/v2/registros/cc/{cc}  | Elimina todos los ingresos de un cliente identificado con la cedula especificada|
 
 <a id="despliegue"></a>
 ## Despliegue
