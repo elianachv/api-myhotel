@@ -1,11 +1,14 @@
 package com.bancoPopular.pruebaTecnica.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "registros")
 public class Registro {

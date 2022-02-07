@@ -55,6 +55,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleException(Exception exc) {
+        exc.printStackTrace();
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         return buildResponseEntity(httpStatus, new RuntimeException("Se presento un problema, reporte e intente luego."));
     }
@@ -64,6 +65,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<ErrorResponse> buildResponseEntity(HttpStatus httpStatus, Exception exc, List<String> errors) {
+        exc.printStackTrace();
         ErrorResponse error = new ErrorResponse();
         error.setMensaje(exc.getMessage());
         error.setEstado(httpStatus.value());

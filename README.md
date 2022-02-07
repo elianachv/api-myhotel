@@ -117,15 +117,15 @@ En la carpeta bd puede encontrar el script sql para configurar la base de datos
 
 | Método | Url  |  Descripción |   
 |--|--|--|  
-|POST| /api/servicios  | Agrega otro servicio a la tabla servicios|  
-| GET | /api/servicios  | Obtienes todos los servicios ofrecidos por el hotel|  
-| GET | /api/servicios/tipo/{tipo}| Obtienes todos los servicios clasificados por el tipo especificado|  
-| GET | /api/servicios/id/{id}  | Obtiene el servicio que coincida con el id especificado|  
-| PUT| /api/servicios/id/{id}  | Modifica el servicio identificado con el id especificado con los datos del servicio recibido en el body|  
-| DELETE| /api/servicios/id/{id}  | Elimina el servicio identificado con el id especificado|  
-| GET | /api/servicios/identificador/{identificador}  | Obtiene el servicio que coincida con el identificador especificado|  
-PUT| /api/servicios/identificador/{identificador}  | Modifica el servicio identificado con el identificador especificado con los datos del servicio recibido en el body|  
-| DELETE| /api/servicios/identificador/{identificador}  | Elimina el servicio identificado con el identificador especificado|
+|POST| /api/v2/servicios  | Agrega otro servicio a la tabla servicios|  
+| GET | /api/v2/servicios  | Obtienes todos los servicios ofrecidos por el hotel|  
+| GET | /api/v2/servicios/tipo/{tipo}| Obtienes todos los servicios clasificados por el tipo especificado|  
+| GET | /api/v2/servicios/id/{id}  | Obtiene el servicio que coincida con el id especificado|  
+| PUT| /api/v2/servicios/id/{id}  | Modifica el servicio identificado con el id especificado con los datos del servicio recibido en el body|  
+| DELETE| /api/v2/servicios/id/{id}  | Elimina el servicio identificado con el id especificado|  
+| GET | /api/v2/servicios/identificador/{identificador}  | Obtiene el servicio que coincida con el identificador especificado|  
+PUT| /api/v2/servicios/identificador/{identificador}  | Modifica el servicio identificado con el identificador especificado con los datos del servicio recibido en el body|  
+| DELETE| /api/v2/servicios/identificador/{identificador}  | Elimina el servicio identificado con el identificador especificado|
 
 <a id="api-clientes"></a>  
 **Clientes**  
@@ -203,7 +203,7 @@ El proyecto se encuentra desplegado en AWS haciendo uso de los servicios:
 - AWS RDS
 - AWS Elastic Bean Stack
 
-La url para acceder y realizar pruebas en vivo con la api es [http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/](http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/api/servicios)
+La url para acceder y realizar pruebas en vivo con la api es [http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/](http://apimyhotel-env.eba-aeaeep3n.us-east-2.elasticbeanstalk.com/api/v2/servicios)
 
 <a id="pruebas"></a>
 ## Pruebas

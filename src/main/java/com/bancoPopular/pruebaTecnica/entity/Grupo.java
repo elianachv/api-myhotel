@@ -1,11 +1,16 @@
 package com.bancoPopular.pruebaTecnica.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "grupos")
 public class Grupo {
@@ -17,8 +22,8 @@ public class Grupo {
     @Column(name = "total_integrantes")
     private int total_integrantes;
 
-    @OneToMany(mappedBy = "grupo", cascade = {CascadeType.ALL})
-    List<Ingreso> ingresos;
+    /*@OneToMany(mappedBy = "grupo", cascade = {CascadeType.ALL})
+    List<Ingreso> ingresos;*/
 
     public Grupo(long id, int total_integrantes) {
         this.id = id;

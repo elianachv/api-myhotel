@@ -19,12 +19,6 @@ public class Ingreso {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    /*@Column(name = "id_grupo")
-    private long id_grupo;*/
-
-    /*@Column(name = "cedula")
-    private String cedula;*/
-
     @Column(name = "fecha_ingreso")
     private Date fecha_ingreso;
 
@@ -34,25 +28,31 @@ public class Ingreso {
     @Column(name = "total_consumo")
     private long total_consumo;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @Column(name = "id_grupo")
+    private long id_grupo;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    @ToString.Exclude
     private Cliente cliente;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    /*@ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_grupo", referencedColumnName = "id")
-    private Grupo grupo;
+    private Grupo grupo;*/
 
-    @OneToMany(mappedBy = "ingreso", cascade = {CascadeType.ALL})
-    List<Registro> registros;
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "ingreso", cascade = {CascadeType.ALL})
+    @ToString.Exclude
+    List<Registro> registros;*/
 
 
-    public Ingreso(long id, long id_grupo, String cedula, Date fecha_ingreso, Date fecha_salida, long total_consumo) {
+    public Ingreso(long id, Date fecha_ingreso, Date fecha_salida, long total_consumo, Cliente cliente, Grupo grupo, List<Registro> registros) {
         this.id = id;
-        //this.id_grupo = id_grupo;
-        //this.cedula = cedula;
         this.fecha_ingreso = fecha_ingreso;
         this.fecha_salida = fecha_salida;
         this.total_consumo = total_consumo;
+        this.cliente = cliente;
+        //this.grupo = grupo;
+        //this.registros = registros;
     }
 
     public Ingreso() {
