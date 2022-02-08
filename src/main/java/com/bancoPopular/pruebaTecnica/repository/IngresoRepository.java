@@ -13,10 +13,10 @@ import java.util.List;
 public interface IngresoRepository extends JpaRepository<Ingreso, Long> {
 
     @Query("select ingreso from Ingreso ingreso where ingreso.cliente.cedula = ?1")
-    List<Ingreso> getAllByCedula(String cedula);
+    List<Ingreso> findAllByCedula(String cedula);
 
     @Query("select ingreso from Ingreso ingreso where ingreso.id_grupo = ?1")
-    List<Ingreso> getAllByGrupo(long grupo);
+    List<Ingreso> findAllByGrupo(long grupo);
 
     @Query(value = "SELECT * FROM ingresos  WHERE cedula = ?1 ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Ingreso getUltimoIngreso(String cedula);

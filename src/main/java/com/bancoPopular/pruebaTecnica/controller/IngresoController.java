@@ -1,69 +1,72 @@
 package com.bancoPopular.pruebaTecnica.controller;
 
 import com.bancoPopular.pruebaTecnica.entity.Ingreso;
-import com.bancoPopular.pruebaTecnica.exception.NotFoundException;
-import com.bancoPopular.pruebaTecnica.repository.IngresoRepository;
+import com.bancoPopular.pruebaTecnica.exception.InvalidDataException;
+import com.bancoPopular.pruebaTecnica.service.IngresoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v2/ingresos")
 public class IngresoController {
 
+
     @Autowired
-    private IngresoRepository ingresoRepository;
+    private IngresoService ingresoService;
 
     @GetMapping
-    public List<Ingreso> obtenerIngresos() {
-        return ingresoRepository.findAll();
+    public ResponseEntity<?> obtenerIngresos() {
+
+        return ResponseEntity.ok().body(ingresoService.findAll());
     }
 
     @GetMapping("/grupo/{grupo}")
-    public List<Ingreso> obtenerIngresosPorGrupo(@PathVariable(value = "grupo") long grupo) {
-        return ingresoRepository.getAllByGrupo(grupo);
+    public ResponseEntity<?> obtenerIngresosPorGrupo(@PathVariable(value = "grupo") long grupo) {
+        return ResponseEntity.ok().body(ingresoService.findAllByGroup(grupo));
     }
 
     @GetMapping("/cc/{cc}")
-    public List<Ingreso> obtenerIngresosPorCedula(@PathVariable(value = "cc") String cedula) {
-        return ingresoRepository.getAllByCedula(cedula);
+    public ResponseEntity<?> obtenerIngresosPorCedula(@PathVariable(value = "cc") String cedula) {
+        return ResponseEntity.ok().body(ingresoService.getIngresosByCedula(cedula));
     }
 
     @GetMapping("/id/{id}")
-    public Ingreso obtenerIngresoPorId(@PathVariable(value = "id") long id) {
-        return ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
+    public ResponseEntity<?> obtenerIngresoPorId(@PathVariable(value = "id") long id) {
+        return ResponseEntity.ok().body(ingresoService.findById(id));
     }
 
     @PostMapping
-    public Ingreso crearIngreso(@RequestBody Ingreso ingreso) {
-        return ingresoRepository.save(ingreso);
+    public ResponseEntity<?> crearIngreso(@Valid @RequestBody Ingreso ingreso, BindingResult result) {
+
+        if (result.hasErrors()) {
+            throw new InvalidDataException(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingresoService.save(ingreso));
     }
 
     @PutMapping("/id/{id}")
-    public Ingreso modificarIngresoPorId(@PathVariable(value = "id") long id, @RequestBody Ingreso ingresoEditado) {
-        Ingreso ingresoExistente = ingresoRepository.findById(id).get();
-        ingresoExistente.setFecha_ingreso(ingresoEditado.getFecha_ingreso());
-        ingresoExistente.setFecha_salida(ingresoEditado.getFecha_salida());
-        //ingresoExistente.setCedula(ingresoEditado.getCedula());
-        //ingresoExistente.setId_grupo(ingresoEditado.getId_grupo());
-        ingresoExistente.setTotal_consumo(ingresoEditado.getTotal_consumo());
-        ingresoRepository.save(ingresoExistente);
-        return ingresoExistente;
+    public ResponseEntity<?> modificarIngresoPorId(@PathVariable(value = "id") long id, @Valid @RequestBody Ingreso ingresoEditado, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InvalidDataException(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingresoService.update(id, ingresoEditado));
     }
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Ingreso> eliminarIngresoPorId(@PathVariable(value = "id") long id) {
-        Ingreso ingresoExistente = ingresoRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingreso con id " + id + " no está registrado en la base de datos"));
-        ingresoRepository.delete(ingresoExistente);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(ingresoService.delete(id));
 
     }
 
     @DeleteMapping("/cc/{cc}")
-    public void eliminarIngresosPorCedula(@PathVariable(value = "cedula") String cedula) {
-        ingresoRepository.deleteByCedula(cedula);
+    public ResponseEntity<Ingreso> eliminarIngresosPorCedula(@PathVariable(value = "cedula") String cedula) {
+        ingresoService.deleteByCedula(cedula);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
