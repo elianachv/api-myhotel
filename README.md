@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-# Construcción de API REST de un hotel
+# Construcción de API REST de un hotel (versión 1)
 
 **Para revisar la misma aplicación pero desarrollada con Backend Javascript haga clic [aquí](https://elianachv.github.io/api-myhotel-js/)**
 
