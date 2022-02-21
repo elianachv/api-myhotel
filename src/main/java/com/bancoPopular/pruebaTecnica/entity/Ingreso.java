@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Ingreso {
     private long id;
 
     @Column(name = "fecha_ingreso")
+    @NotNull(message = "No puede ser nulo")
     private Date fecha_ingreso;
 
     @Column(name = "fecha_salida")
@@ -29,6 +31,7 @@ public class Ingreso {
     private long total_consumo;
 
     @Column(name = "id_grupo")
+    @NotNull(message = "No puede ser nulo")
     private long id_grupo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
@@ -45,14 +48,12 @@ public class Ingreso {
     List<Registro> registros;*/
 
 
-    public Ingreso(long id, Date fecha_ingreso, Date fecha_salida, long total_consumo, Cliente cliente, Grupo grupo, List<Registro> registros) {
+    public Ingreso(long id, Date fecha_ingreso, Date fecha_salida, long total_consumo, Cliente cliente) {
         this.id = id;
         this.fecha_ingreso = fecha_ingreso;
         this.fecha_salida = fecha_salida;
         this.total_consumo = total_consumo;
         this.cliente = cliente;
-        //this.grupo = grupo;
-        //this.registros = registros;
     }
 
     public Ingreso() {

@@ -28,7 +28,6 @@ public class ClienteController {
         System.out.println("LISTAR TODOS LOS CLIENTES REGISTRADOS");
         //List<Cliente> clienteList = StreamSupport.stream(clienteService.findAll().spliterator(), false).collect(Collectors.toList());
         return ResponseEntity.ok().body(clienteService.findAll());
-        //return ResponseEntity.status(HttpStatus.ACCEPTED).body(clienteService.findAll());
     }
 
     @GetMapping("/cc/{cc}")

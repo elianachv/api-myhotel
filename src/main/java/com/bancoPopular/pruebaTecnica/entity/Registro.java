@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Getter
@@ -23,9 +24,11 @@ public class Registro {
     private long id_ingreso;*/
 
     @Column(name = "fecha")
+    @NotNull(message = "No puede ser nulo")
     private Date fecha;
 
     @Column(name = "id_ingreso")
+    @NotNull(message = "No puede ser nulo")
     private long id_ingreso;
 
     /*@Column(name = "cedula")
@@ -52,23 +55,9 @@ public class Registro {
         this.id_ingreso = id_ingreso;
     }
 
-    public Registro(long id, long id_ingreso, Date fecha, String cedula, String servicio) {
-        this.id = id;
-        //this.id_ingreso = id_ingreso;
-        this.fecha = fecha;
-        //this.cedula = cedula;
-        //this.servicio = servicio;
-    }
 
     public Registro() {
     }
 
-    //Cuando se registre la fecha de salida de un cliente se recalcula los costos totales
-    /*
-    * for each registro que coincide con el cliente
-    *   consultar el servivio que tiene
-    *   total += servivio.getPrecio()
-    *
-    * modificar cliente total_consumo = total
-    * */
+
 }

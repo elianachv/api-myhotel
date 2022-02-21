@@ -92,7 +92,7 @@ public class GrupoServiceImpl implements GrupoService {
 
         Map<String, Object> infoGrupo = new HashMap<>();
 
-        List<Ingreso> ingresos = ingresoDao.getAllByGrupo(grupo.getId());
+        List<Ingreso> ingresos = ingresoDao.findAllByGrupo(grupo.getId());
         List<Cliente> clientes = new ArrayList<>();
 
         for (Ingreso ingreso : ingresos) {
