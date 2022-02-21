@@ -1,13 +1,14 @@
 <a id="top"></a>
 
-# Construcción de API REST de un hotel
+# Construcción de API REST de un hotel (versión 2)
 
 **Para revisar la misma aplicación pero desarrollada con Backend Javascript haga clic [aquí](https://elianachv.github.io/api-myhotel-js/)**
 
 ## Índice
 1. [Descripción](#descripcion)
 2. [Tecnologías y aplicaciones utilizadas](#tecnologias)
-3. [Estructura del proyecto](#estructura)
+3. [Mejoras](#mejoras)
+4. [Estructura del proyecto](#estructura)
 
  * [Base de datos](#bd)
    * [Servicios](#bd-servicios)
@@ -22,10 +23,12 @@
    * [Grupos](#api-grupos)
    * [Registros](#api-registros)
    * [Ingresos](#api-ingresos)
-   
-4. [Despliegue](#despliegue)
-5. [Pruebas](#pruebas)
-6. [Contacto](#contacto)
+  * [Ingresos](#api-docs)
+
+
+5. [Despliegue](#despliegue)
+6. [Pruebas](#pruebas)
+7. [Contacto](#contacto)
 
 
 <a id="descripcion"></a>
@@ -44,6 +47,16 @@ MVP de la API de un hotel que permite:
 * [MySQL Workbench](https://dev.mysql.com/downloads/mysql/)
 * [Postman](https://www.postman.com/)
 * [AWS](https://aws.amazon.com/es/)
+
+<a id="mejoras"></a>
+## Mejoras
+
+* Se implementa una mejora en la arquitectura del servicio utilizando el patrón DAO
+
+![modelo](https://github.com/elianachv/api-myhotel/blob/main/bd/estructura.png?raw=true)
+
+* Se cuenta con una documentación integrada accediendo en los endpoints /api/v2/docs y /api/v2/docs-ui
+* Se implementó testing del servicio de servicios ofrecidos por el hotel.
 
 <a id="estructura"></a>
 ## Estructura del proyecto
@@ -180,6 +193,15 @@ PUT| /api/v2/servicios/identificador/{identificador}  | Modifica el servicio ide
 | PUT| /api/v2/ingresos/id/{id}  | Modifica el ingreso identificado con el id especificado con los datos del ingreso recibido en el body|  
 | DELETE| /api/v2/registros/id/{id}  | Elimina el registro identificado con el id especificado|  
 | DELETE| /api/v2/registros/cc/{cc}  | Elimina todos los ingresos de un cliente identificado con la cedula especificada|
+
+<a id="api-docs"></a>  
+**Documentación**  
+
+| Método | Url  |  Descripción |   
+|--|--|--|  
+| GET | /api/v2/docs| Documentación en formato json|  
+| GET | /api/v2/docs-ui| Documentación con interfaz de usuario|  
+
 
 <a id="despliegue"></a>
 ## Despliegue
